@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -173,11 +172,35 @@ export const ChatInterface = ({ onFlightSearch }: ChatInterfaceProps) => {
     };
   };
 
+  const parseDate = (dateStr: string, year: number): Date => {
+    // Parse dates like "Feb 5" or "Mar 15"
+    const months: { [key: string]: number } = {
+      'jan': 0, 'feb': 1, 'mar': 2, 'apr': 3, 'may': 4, 'jun': 5,
+      'jul': 6, 'aug': 7, 'sep': 8, 'oct': 9, 'nov': 10, 'dec': 11
+    };
+    
+    const parts = dateStr.toLowerCase().trim().split(' ');
+    if (parts.length >= 2) {
+      const monthStr = parts[0].substring(0, 3);
+      const day = parseInt(parts[1]);
+      
+      if (months[monthStr] !== undefined && !isNaN(day)) {
+        return new Date(year, months[monthStr], day);
+      }
+    }
+    
+    // Fallback to current date if parsing fails
+    return new Date();
+  };
+
   const handleSuggestionClick = (suggestion: FlightSuggestion, destination: string) => {
     const [startDate, endDate] = suggestion.dates.split('-');
-    const year = new Date().getFullYear();
-    const departure = new Date(`${startDate.trim()} ${year}`);
-    const returnDate = new Date(`${endDate.trim()} ${year}`);
+    const year = 2025; // Since all suggestions are for 2025
+    
+    const departure = parseDate(startDate, year);
+    const returnDate = parseDate(endDate, year);
+    
+    console.log('Parsed dates:', { departure, returnDate, startDate, endDate });
     
     const searchParams: SearchParams = {
       from: userLocation,
