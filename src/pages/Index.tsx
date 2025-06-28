@@ -4,6 +4,8 @@ import { SearchForm } from '@/components/SearchForm';
 import { FlightResults } from '@/components/FlightResults';
 import { FilterSidebar } from '@/components/FilterSidebar';
 import { Header } from '@/components/Header';
+import { ChatInterface } from '@/components/ChatInterface';
+import { Badge } from '@/components/ui/badge';
 
 export interface SearchParams {
   from: string;
@@ -23,6 +25,7 @@ export interface FilterParams {
 }
 
 const Index = () => {
+  const [searchMode, setSearchMode] = useState<'chat' | 'form'>('chat');
   const [searchParams, setSearchParams] = useState<SearchParams>({
     from: '',
     to: '',
@@ -55,9 +58,30 @@ const Index = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-2">Flights</h1>
-          <p className="text-gray-600 mb-8">Find the best flights for your next trip</p>
+          <p className="text-gray-600 mb-6">Find the best flights for your next trip</p>
           
-          <SearchForm onSearch={handleSearch} />
+          <div className="flex gap-4 mb-6">
+            <Badge 
+              variant={searchMode === 'chat' ? 'default' : 'outline'} 
+              className="cursor-pointer px-4 py-2"
+              onClick={() => setSearchMode('chat')}
+            >
+              Chat with AI
+            </Badge>
+            <Badge 
+              variant={searchMode === 'form' ? 'default' : 'outline'} 
+              className="cursor-pointer px-4 py-2"
+              onClick={() => setSearchMode('form')}
+            >
+              Advanced Search
+            </Badge>
+          </div>
+          
+          {searchMode === 'chat' ? (
+            <ChatInterface onFlightSearch={handleSearch} />
+          ) : (
+            <SearchForm onSearch={handleSearch} />
+          )}
         </div>
 
         {hasSearched && (
