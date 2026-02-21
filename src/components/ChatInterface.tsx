@@ -276,14 +276,14 @@ export const ChatInterface = ({ onFlightSearch }: ChatInterfaceProps) => {
               <div
                 className={cn(
                   'flex gap-3 max-w-[80%]',
-                  message.role === 'user' ? 'ml-auto' : 'mr-auto'
+                  message.role === 'user' ? 'ml-auto flex-row-reverse' : 'mr-auto'
                 )}
               >
                 <div
                   className={cn(
                     'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
                     message.role === 'user' 
-                      ? 'bg-blue-600 text-white order-2' 
+                      ? 'bg-blue-600 text-white' 
                       : 'bg-gray-100 text-gray-600'
                   )}
                 >
@@ -293,7 +293,7 @@ export const ChatInterface = ({ onFlightSearch }: ChatInterfaceProps) => {
                   className={cn(
                     'rounded-lg p-3 whitespace-pre-wrap',
                     message.role === 'user'
-                      ? 'bg-blue-600 text-white order-1'
+                      ? 'bg-blue-600 text-white'
                       : 'bg-gray-100 text-gray-900'
                   )}
                 >
