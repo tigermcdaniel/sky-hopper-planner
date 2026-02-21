@@ -268,7 +268,7 @@ export const ChatInterface = ({ onFlightSearch }: ChatInterfaceProps) => {
   };
 
   return (
-    <Card className="h-96 flex flex-col">
+    <Card className="h-[500px] flex flex-col">
       <CardContent className="flex-1 flex flex-col p-4">
         <div className="flex-1 overflow-y-auto space-y-4 mb-4">
           {messages.map((message) => (
@@ -302,11 +302,11 @@ export const ChatInterface = ({ onFlightSearch }: ChatInterfaceProps) => {
               </div>
               
               {message.suggestions && (
-                <div className="ml-11 space-y-2">
+                <div className="ml-11 space-y-3 relative z-0">
                   {message.suggestions.map((suggestion, index) => (
                     <Card 
                       key={index} 
-                      className="p-3 cursor-pointer hover:bg-blue-50 transition-colors border-l-4 border-l-blue-500"
+                      className="p-3 cursor-pointer hover:bg-blue-50 transition-colors border-l-4 border-l-blue-500 bg-white relative"
                       onClick={() => {
                         const destination = messages[messages.indexOf(message) - 1]?.content;
                         if (destination) {
